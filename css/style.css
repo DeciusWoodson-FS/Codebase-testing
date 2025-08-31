@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #1d191f;
+}
+
+h1{
+    text-align: center;
+    color: #8a6a6a;
+    text-decoration: underline;
+    
+}
