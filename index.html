@@ -3,35 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <title>Codebase Testing</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/mocha/mocha.css"
-    />
-    <style>
-      #mocha,
-      #mocha .suite,
-      #mocha .test {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-    </style>
   </head>
   <body>
-    <div id="mocha"></div>
+    <div id="mocha" style="display: none;"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/mocha/mocha.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chai@4.3.10/chai.js"></script>
 
     <script>
-      mocha.setup("bdd");
+      mocha.setup('bdd');
+    </script>
+
+    <script>
+      const testAndLog = (func, ...args) => {
+        
+        console.log(`  → Input:`, ...args); 
+        
+        
+        const result = func(...args);
+        console.log(`  ↳ Result:`, result);
+        return result;
+      };
     </script>
 
     <script src="js/script.js"></script>
     <script src="js/script.test.js"></script>
 
     <script>
-      mocha.run();
+      const runner = mocha.run();
+
+      runner.on('pass', test => {
+        console.log(`✅ Passed: ${test.fullTitle()}`);
+      });
+
+      runner.on('fail', (test, err) => {
+        console.error(`❌ Failed: ${test.fullTitle()}`);
+        console.error(err);
+      });
+
+      runner.on('end', () => {
+        const stats = runner.stats;
+        console.log(`🎉 Testing Finished: ${stats.passes} passes, ${stats.failures} failures.`);
+      });
     </script>
   </body>
 </html>
